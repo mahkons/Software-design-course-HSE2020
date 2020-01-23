@@ -1,0 +1,14 @@
+matrix:
+    include:
+        - language: cpp
+        - os: linux
+        - dist: bionic
+        compiler:
+            - clang
+            - gcc
+        script:
+            # TODO
+
+
+notifications:
+    email: false

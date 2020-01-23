@@ -1,1 +1,6 @@
 build/
+
+#vim backup
+*.swp
+*.swo
+*.swn
