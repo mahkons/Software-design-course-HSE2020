@@ -4,21 +4,28 @@
 #include <string>
 
 #include "environment.h"
-#include "parser/parse_result.h"
+#include "result.h"
+#include "parser/tokenizer.h"
+#include "parser/variables_substitutor.h"
+#include "commands/command.h"
 
 namespace NCLI::NParser {
 
+    using parserResult = Result<std::vector<std::string>, std::string>;
+
     class Parser {
     public:
-        explicit Parser(const Environment& env) : env_(env) {};
+        explicit Parser(Environment& env)
+            : tokenizer_(), variables_substitutor_(env) {};
         ~Parser() = default;
         Parser(const Parser&) = delete;
         Parser& operator=(const Parser&) = delete;
 
-        ParseResult parse(std::string user_command);
+        parserResult parse(std::string user_command);
 
     private:
-        const Environment& env_;
+        Tokenizer tokenizer_;
+        VariablesSubstitutor variables_substitutor_;
     };
 
 } // namespace NCLI::NParser

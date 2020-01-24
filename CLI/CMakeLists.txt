@@ -7,6 +7,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -Werror -pedant
 set(SOURCES 
     src/main.cpp
     src/application.cpp
+    src/environment.cpp
+    src/executor.cpp
+    src/parser/parser.cpp
+    src/parser/tokenizer.cpp
+    src/parser/variables_substitutor.cpp
 )
 
 include_directories(inc/)

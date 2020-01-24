@@ -4,12 +4,15 @@
 #include <string>
 
 #include "parser/token.h"
+#include "result.h"
 
 namespace NCLI::NParser {
 
+    using tokenizerResult = Result<std::vector<Token>, std::string>;
+
     class Tokenizer {
     public:
-        std::tuple<std::vector<Token>, bool, std::string> tokenize(std::string text);
+        tokenizerResult tokenize(std::string text);
 
     private:
         class TokenizerHelper {

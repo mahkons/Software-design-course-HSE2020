@@ -6,20 +6,23 @@
 
 namespace NCLI::NParser {
 
-    std::tuple<std::vector<Token>, bool, std::string> Tokenizer::tokenize(std::string text) {
+    using tokenizerResult = Result<std::vector<Token>, std::string>;
+
+    tokenizerResult Tokenizer::tokenize(std::string text) {
         TokenizerHelper helper;
         for (char c : text) {
             helper.add_char(c);
         }
         helper.add_char(' ');
+
         if (helper.current_quote() != TypeOfQuotation::none) {
-            std::string error_message = "unmatched_quote: ";
+            std::string error_message = "unmatched quote: ";
             error_message += static_cast<char>(helper.current_quote());
-            return std::make_tuple(std::vector<Token>(), 1, error_message);
+            return tokenizerResult(Error(error_message));
         }
 
-        return std::make_tuple(helper.get_tokens(), 0, "");
-    };
+        return tokenizerResult(Ok(helper.get_tokens()));
+    }
 
     void Tokenizer::TokenizerHelper::add_cur_word() {
         if (cur_word_.empty())
@@ -46,6 +49,7 @@ namespace NCLI::NParser {
         }
 
         if ((c == '\'' || c == '\"') && cur_quote_ == TypeOfQuotation::none) {
+            add_cur_word();
             cur_quote_ = static_cast<TypeOfQuotation>(c);
             return;
         }

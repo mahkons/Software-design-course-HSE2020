@@ -9,15 +9,13 @@ namespace NCLI::NParser {
         
     class VariablesSubstitutor {
     public:
-        explicit VariablesSubstitutor(const Environment& env) : env_(env) {};
+        explicit VariablesSubstitutor(Environment& env) : env_(env) {};
 
-        std::vector<Token> substitute(const std::vector<Token>& tokens);
-
-    private:
         Token substitute(const Token& token);
+        std::vector<Token> substitute(const std::vector<Token>& tokens);
         
     private:
-        const Environment& env_;
+        Environment& env_;
     };
 
 } // namespace NCLI::NParser
