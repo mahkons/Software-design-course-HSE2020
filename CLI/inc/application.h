@@ -2,6 +2,8 @@
 
 #include "environment.h"
 #include "parser/parser.h"
+#include "commands/command_factory.h"
+#include "executor.h"
 
 namespace NCLI {
 
@@ -16,8 +18,9 @@ namespace NCLI {
 
     private:
         Environment env_;
+        NCommand::CommandFactory command_factory_;
         NParser::Parser parser_;
-
+        Executor executor_;
     };
 
 } // namespace NCLI

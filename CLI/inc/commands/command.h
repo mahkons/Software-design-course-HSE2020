@@ -10,8 +10,10 @@ namespace NCLI::NCommand {
 
     class Command {
     public:
-        Command(std::vector<std::string>) {}
-        virtual ExecutionStatus execute(std::iostream& is, std::ostream& os) = delete;
+        Command() {}
+        virtual ExecutionResult execute(std::istream&, std::ostream&) { 
+            return ExecutionResult(ExecutionStatus::success, "");
+        };
     };
 
 } // namespace NCLI::NCommand

@@ -6,8 +6,6 @@
 
 namespace NCLI::NParser {
 
-    using tokenizerResult = Result<std::vector<Token>, std::string>;
-
     tokenizerResult Tokenizer::tokenize(std::string text) {
         TokenizerHelper helper;
         for (char c : text) {
