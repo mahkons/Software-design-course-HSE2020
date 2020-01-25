@@ -13,8 +13,13 @@ set(SOURCES
     src/parser/tokenizer.cpp
     src/parser/variables_substitutor.cpp
     src/parser/commands_parser.cpp
-    src/commands/wc_command.cpp
     src/commands/command_factory.cpp
+
+    src/commands/wc_command.cpp
+    src/commands/echo_command.cpp
+    src/commands/exit_command.cpp
+    src/commands/pwd_command.cpp
+    src/commands/cat_command.cpp
 )
 
 include_directories(inc/)

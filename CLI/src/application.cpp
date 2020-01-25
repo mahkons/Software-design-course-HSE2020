@@ -6,6 +6,10 @@
 #include "commands/execution_result.h"
 #include "commands/command.h"
 #include "commands/wc_command.h"
+#include "commands/echo_command.h"
+#include "commands/exit_command.h"
+#include "commands/pwd_command.h"
+#include "commands/cat_command.h"
 
 namespace NCLI {
 
@@ -13,6 +17,10 @@ namespace NCLI {
         NCommand::CommandFactory create_command_factory() {
             NCommand::CommandFactory factory;
             factory.register_command(std::regex("wc"), NCommand::WcCommand::create_command);
+            factory.register_command(std::regex("cat"), NCommand::CatCommand::create_command);
+            factory.register_command(std::regex("echo"), NCommand::EchoCommand::create_command);
+            factory.register_command(std::regex("pwd"), NCommand::PwdCommand::create_command);
+            factory.register_command(std::regex("exit"), NCommand::ExitCommand::create_command);
             return factory;
         }
     }
