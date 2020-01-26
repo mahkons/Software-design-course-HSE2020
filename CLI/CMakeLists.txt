@@ -31,7 +31,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 find_package(Boost COMPONENTS filesystem REQUIRED)
 
 add_library(lcli STATIC ${SOURCES})
-target_link_libraries(lcli PUBLIC stdc++fs)
+target_link_libraries(lcli stdc++fs)
 target_link_libraries(lcli ${Boost_LIBRARIES})
 add_executable(cli src/main.cpp)
 target_link_libraries(cli lcli)
