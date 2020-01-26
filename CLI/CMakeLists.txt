@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -Werror -pedantic -pthread")
 
 set(SOURCES 
-    src/main.cpp
     src/application.cpp
     src/environment.cpp
     src/executor.cpp
@@ -31,9 +30,10 @@ set(Boost_USE_MULTITHREADED ON)
 include_directories(${Boost_INCLUDE_DIRS})
 find_package(Boost COMPONENTS filesystem REQUIRED)
 
-add_executable(cli ${SOURCES})
-set_property(TARGET cli PROPERTY ENABLE_EXPORTS 1)
-target_link_libraries(cli ${Boost_LIBRARIES})
+add_library(lcli STATIC ${SOURCES})
+target_link_libraries(lcli ${Boost_LIBRARIES})
+add_executable(cli src/main.cpp)
+target_link_libraries(cli lcli)
 
 #GTest
 enable_testing()
