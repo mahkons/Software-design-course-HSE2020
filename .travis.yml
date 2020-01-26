@@ -3,12 +3,26 @@ matrix:
         - language: cpp
         - os: linux
         - dist: bionic
+      addons:
+          apt:
+            sources:
+              - ubuntu-toolchain-r-test
+            packages:
+              - g++-8
+      env:
+        - MATRIX_EVAL="CXX=g++-8"
         compiler:
-            - clang
             - gcc
         script:
-            # TODO
-
+            - cd CLI
+            - mkdir build
+            - cd build
+            - cmake ..
+            - make
+            - ./cli_test
+      
+before_install:
+    - eval "${MATRIX_EVAL}"
 
 notifications:
     email: false
