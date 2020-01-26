@@ -1,1 +1,1 @@
-![CLI](docs/CLI)
+![CLI](docs/CLI.png)
