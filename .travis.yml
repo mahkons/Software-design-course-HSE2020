@@ -14,7 +14,7 @@ matrix:
                     - g++-8
                     - boost1.70
         env:
-            - MATRIX_EVAL="CXX=g++-8"
+            - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
         compiler:
             - gcc
         script:
