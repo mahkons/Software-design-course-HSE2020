@@ -15,6 +15,7 @@ matrix:
                     - boost1.67
         env:
             - MATRIX_EVAL="CXX=g++-8"
+            - BOOST_LIBRARYDIR=/usr/lib
         compiler:
             - gcc
         script:
