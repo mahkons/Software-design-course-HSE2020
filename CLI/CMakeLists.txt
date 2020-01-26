@@ -32,6 +32,7 @@ find_package(Boost COMPONENTS filesystem REQUIRED)
 
 add_library(lcli STATIC ${SOURCES})
 target_link_libraries(lcli ${Boost_LIBRARIES})
+message(${Boost_LIBRARIES})
 add_executable(cli src/main.cpp)
 target_link_libraries(cli lcli)
 
@@ -47,6 +48,8 @@ set(TEST_SOURCES
     test/environment_test.cpp
     test/executor_test.cpp
     test/command_factory_test.cpp
+    test/parser_test.cpp
+    test/commands_test.cpp
 )
 
 add_executable(cli_test ${TEST_SOURCES})
