@@ -12,7 +12,7 @@ matrix:
                     - sourceline: 'ppa:mhier/libboost-latest'
                 packages:
                     - g++-8
-                    - libstdc++-7-dev
+                    - libstdc++-8-dev
                     - boost1.70
         env:
             - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
