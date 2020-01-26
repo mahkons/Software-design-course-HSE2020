@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10) # Проверка версии CMake
 project(CLI)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -Werror -pedantic -pthread")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -Werror -pedantic -pthread -D_GLIBCXX_USE_CXX11_ABI=0")
 
 set(SOURCES 
     src/application.cpp
@@ -32,7 +32,6 @@ find_package(Boost COMPONENTS filesystem REQUIRED)
 
 add_library(lcli STATIC ${SOURCES})
 target_link_libraries(lcli ${Boost_LIBRARIES})
-message(${Boost_LIBRARIES})
 add_executable(cli src/main.cpp)
 target_link_libraries(cli lcli)
 
