@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0) # Проверка версии CMake
+cmake_minimum_required(VERSION 3.10) # Проверка версии CMake
 project(CLI)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -26,11 +26,27 @@ set(SOURCES
 
 include_directories(inc/)
 
-#header only libraries
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)
 include_directories(${Boost_INCLUDE_DIRS})
 find_package(Boost COMPONENTS filesystem REQUIRED)
 
 add_executable(cli ${SOURCES})
+set_property(TARGET cli PROPERTY ENABLE_EXPORTS 1)
 target_link_libraries(cli ${Boost_LIBRARIES})
+
+#GTest
+enable_testing()
+include(GoogleTest)
+add_subdirectory(lib/googletest/googletest)
+include_directories(lib/googletest/googletest/include)
+include_directories(lib/googletest/googletest)
+
+set(TEST_SOURCES
+    test/main.cpp
+    test/test.cpp
+)
+
+add_executable(cli_test ${TEST_SOURCES})
+target_link_libraries(cli_test gtest gtest_main)
+add_test(NAME cli_test COMMAND cli_test)
