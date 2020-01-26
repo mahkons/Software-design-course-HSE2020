@@ -44,9 +44,11 @@ include_directories(lib/googletest/googletest)
 
 set(TEST_SOURCES
     test/main.cpp
-    test/test.cpp
+    test/environment_test.cpp
+    test/executor_test.cpp
+    test/command_factory_test.cpp
 )
 
 add_executable(cli_test ${TEST_SOURCES})
-target_link_libraries(cli_test gtest gtest_main)
+target_link_libraries(cli_test lcli gtest gtest_main)
 add_test(NAME cli_test COMMAND cli_test)

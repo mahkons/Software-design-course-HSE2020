@@ -16,7 +16,10 @@ namespace NCLI::NCommand {
     }
 
     ExecutionResult CatCommand::execute_helper(std::istream& is, std::ostream& os) {
-        os << is.rdbuf();
+        char c;
+        while (is.get(c)) {
+            os << c;
+        }
         return ExecutionResult(ExecutionStatus::success, "");
     }
 

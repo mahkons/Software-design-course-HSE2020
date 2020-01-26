@@ -10,7 +10,8 @@ namespace NCLI::NCommand {
 
     class Command {
     public:
-        Command() {}
+        Command() = default;
+        virtual ~Command() = default;
         virtual ExecutionResult execute(std::istream&, std::ostream&) { 
             return ExecutionResult(ExecutionStatus::success, "");
         };
