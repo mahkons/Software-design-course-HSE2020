@@ -20,6 +20,7 @@ set(SOURCES
     src/commands/exit_command.cpp
     src/commands/pwd_command.cpp
     src/commands/cat_command.cpp
+    src/commands/assignment_command.cpp
 )
 
 include_directories(inc/)

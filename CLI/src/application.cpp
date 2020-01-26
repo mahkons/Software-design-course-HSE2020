@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <regex>
+#include <functional>
 
 #include "application.h"
 #include "commands/execution_result.h"
@@ -10,23 +11,26 @@
 #include "commands/exit_command.h"
 #include "commands/pwd_command.h"
 #include "commands/cat_command.h"
+#include "commands/assignment_command.h"
 
 namespace NCLI {
 
     namespace {
-        NCommand::CommandFactory create_command_factory() {
+        NCommand::CommandFactory create_command_factory(Environment& env) {
             NCommand::CommandFactory factory;
             factory.register_command(std::regex("wc"), NCommand::WcCommand::create_command);
             factory.register_command(std::regex("cat"), NCommand::CatCommand::create_command);
             factory.register_command(std::regex("echo"), NCommand::EchoCommand::create_command);
             factory.register_command(std::regex("pwd"), NCommand::PwdCommand::create_command);
             factory.register_command(std::regex("exit"), NCommand::ExitCommand::create_command);
+            factory.register_command(std::regex(".*=.*"),
+                    std::bind(NCommand::AssignmentCommand::create_command, env, std::placeholders::_1));
             return factory;
         }
     }
 
     Application::Application() :
-        env_(), command_factory_(create_command_factory()), parser_(env_, command_factory_) { }
+        env_(), command_factory_(create_command_factory(env_)), parser_(env_, command_factory_) { }
 
     void Application::run() {
         while (true) {
