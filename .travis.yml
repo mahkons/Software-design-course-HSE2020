@@ -6,10 +6,13 @@ matrix:
         dist: bionic
         addons:
             apt:
+                update: true
                 sources:
                     - ubuntu-toolchain-r-test
+                    - sourceline: 'ppa:mhier/libboost-latest'
                 packages:
                     - g++-8
+                    - boost1.67
         env:
             - MATRIX_EVAL="CXX=g++-8"
         compiler:
