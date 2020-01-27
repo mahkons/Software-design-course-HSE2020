@@ -42,6 +42,7 @@ namespace NCLI {
             NParser::parserResult parse_result = parser_.parse(user_command);
             if (!parse_result) {
                 std::cout << parse_result.get_error() << std::endl;
+                std::cout << "->";
                 continue;
             }
             NCommand::ExecutionResult execution_result =
