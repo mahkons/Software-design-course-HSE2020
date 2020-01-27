@@ -6,7 +6,7 @@
 
 namespace NCLI::NParser {
 
-    tokenizerResult Tokenizer::tokenize(std::string text) {
+    tokenizerResult Tokenizer::tokenize(const std::string& text) {
         TokenizerHelper helper;
         for (char c : text) {
             helper.add_char(c);

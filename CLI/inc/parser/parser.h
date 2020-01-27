@@ -15,6 +15,7 @@ namespace NCLI::NParser {
 
     using parserResult = Result<std::vector<std::shared_ptr<NCommand::Command>>, std::string>;
 
+    /* Class for parsing commands from input string */
     class Parser {
     public:
         explicit Parser(Environment& env, NCommand::CommandFactory& command_factory)
@@ -23,6 +24,7 @@ namespace NCLI::NParser {
         Parser(const Parser&) = delete;
         Parser& operator=(const Parser&) = delete;
 
+        /* Returns parsed commands list or an error if one occured during parsing */
         parserResult parse(std::string user_command);
 
     private:

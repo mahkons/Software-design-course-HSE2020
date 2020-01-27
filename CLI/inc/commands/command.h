@@ -8,6 +8,9 @@
 
 namespace NCLI::NCommand {
 
+    /* Interface for objects that supports execution
+     * with input and output streams as arguments
+     * and ExecutionResult as result */
     class Command {
     public:
         Command() = default;

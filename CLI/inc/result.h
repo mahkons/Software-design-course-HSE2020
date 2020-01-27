@@ -19,6 +19,7 @@ namespace NCLI {
         E value;
     };
 
+    /* Stores variable of one of types T or E */
     template<typename T, typename E>
     class Result {
     public:
