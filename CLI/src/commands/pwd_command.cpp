@@ -11,7 +11,7 @@ namespace NCLI::NCommand {
     }
 
     ExecutionResult PwdCommand::execute(std::istream&, std::ostream& os) {
-        os << std::filesystem::current_path() << '\n';
+        os << std::string(std::filesystem::current_path()) << '\n';
         return ExecutionResult(ExecutionStatus::success, "");
     }
 
