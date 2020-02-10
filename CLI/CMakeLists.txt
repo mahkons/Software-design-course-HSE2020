@@ -39,9 +39,7 @@ target_link_libraries(cli lcli)
 #GTest
 enable_testing()
 include(GoogleTest)
-add_subdirectory(lib/googletest/googletest)
-include_directories(lib/googletest/googletest/include)
-include_directories(lib/googletest/googletest)
+add_subdirectory(google_test)
 
 set(TEST_SOURCES
     test/main.cpp
