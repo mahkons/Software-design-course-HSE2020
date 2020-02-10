@@ -5,7 +5,7 @@
 namespace NCLI::NCommand {
 
     Result<std::shared_ptr<Command>, std::string> WcCommand::create_command(
-            std::vector<std::string> args) {
+            const std::vector<std::string>& args) {
         if (args.size() <= 1) {
             return Result<std::shared_ptr<Command>, std::string>(
                     Ok(std::shared_ptr<Command>(new WcCommand())));

@@ -8,7 +8,7 @@
 
 namespace NCLI::NParser {
 
-    using commandsParserResult = Result<std::vector<std::shared_ptr<NCommand::Command>>, std::string>;
+    using CommandsParserResult = Result<std::vector<std::shared_ptr<NCommand::Command>>, std::string>;
     
     /* Class for parsing commands from tokens list */
     class CommandsParser {
@@ -22,7 +22,7 @@ namespace NCLI::NParser {
          *  during command construction, returnes an error,
          *  otherwise returns list of pointers to commands in order of
          *  corresponding tokens in input */
-        commandsParserResult parse_commands(const std::vector<Token>& tokens);
+        CommandsParserResult parse_commands(const std::vector<Token>& tokens) const;
 
     private:
         const NCommand::CommandFactory& command_factory_;

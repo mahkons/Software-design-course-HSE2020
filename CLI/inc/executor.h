@@ -19,7 +19,7 @@ namespace NCLI {
          * If some command executes with result status that differs from ExecutionStatus::success
          *  execution terminates instantly and that result returned */ 
         NCommand::ExecutionResult execute(const std::vector<std::shared_ptr<NCommand::Command>>& commands,
-                std::istream& is, std::ostream& os);
+                std::istream& is, std::ostream& os) const;
     };
 
 } // namespace NCLI

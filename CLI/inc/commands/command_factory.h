@@ -11,8 +11,8 @@
 
 namespace NCLI::NCommand {
 
-    using factoryResult = Result<std::shared_ptr<Command>, std::string>;
-    using commandGenerator = std::function<factoryResult(std::vector<std::string>)>;
+    using FactoryResult = Result<std::shared_ptr<Command>, std::string>;
+    using CommandGenerator = std::function<FactoryResult(const std::vector<std::string>&)>;
 
     /* Factory class that creates command by given arguments */
     class CommandFactory {
@@ -24,19 +24,19 @@ namespace NCLI::NCommand {
          *  until finds a match. Uses default command if no match found
          * Returns result of applying matched command generator to given arguments or
          *  an error message of fitted command wasn't found */
-        factoryResult parse_command(std::vector<std::string> args) const;
+        FactoryResult parse_command(std::vector<std::string> args) const;
         /* Adds command generator */
-        void register_command(std::regex name_regex,
-                commandGenerator command_generator);
+        void register_command(const std::regex& name_regex,
+                const CommandGenerator& command_generator);
         /* Adds default command generator
          * If one already was registered, new one replaces it */
         void register_default_command(
-                commandGenerator command_generator);
+                const CommandGenerator& command_generator);
 
 
     private:
-        std::vector<std::pair<std::regex, commandGenerator>> registered_commands_;
-        std::optional<commandGenerator> default_command_;
+        std::vector<std::pair<std::regex, CommandGenerator>> registered_commands_;
+        std::optional<CommandGenerator> default_command_;
 
     };
 

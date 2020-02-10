@@ -20,9 +20,10 @@ namespace NCLI::NCommand {
 
         /* Concats given arguments, except of first one. Adds lineseparator to end of the string.
          * Uses result as text, which will be written during execution */
-        static Result<std::shared_ptr<Command>, std::string> create_command(std::vector<std::string> args);
+        static Result<std::shared_ptr<Command>, std::string> create_command(
+                const std::vector<std::string>& args);
     private:
-        std::string text_;
+        const std::string text_;
     };
 
 } // namespace NCLI::NCommand

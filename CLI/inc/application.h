@@ -22,9 +22,9 @@ namespace NCLI {
 
     private:
         Environment env_;
-        NCommand::CommandFactory command_factory_;
-        NParser::Parser parser_;
-        Executor executor_;
+        const NCommand::CommandFactory command_factory_;
+        const NParser::Parser parser_;
+        const Executor executor_;
     };
 
 } // namespace NCLI

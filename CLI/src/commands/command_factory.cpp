@@ -28,11 +28,12 @@ namespace NCLI::NCommand {
         return factoryResult(Error(std::string("Unknown command: ") + args[0]));
     }
 
-    void CommandFactory::register_command(std::regex name_regex, commandGenerator command_generator) {
+    void CommandFactory::register_command(const std::regex& name_regex,
+            const CommandGenerator& command_generator) {
         registered_commands_.push_back(make_pair(name_regex, command_generator));
     }
 
-    void CommandFactory::register_default_command(commandGenerator command_generator) {
+    void CommandFactory::register_default_command(const CommandGenerator& command_generator) {
         default_command_ = command_generator;
     }
 

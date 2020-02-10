@@ -8,14 +8,14 @@
 
 namespace NCLI::NParser {
 
-    using tokenizerResult = Result<std::vector<Token>, std::string>;
+    using TokenizerResult = Result<std::vector<Token>, std::string>;
 
     /* Class for dividing text into tokens */
     class Tokenizer {
     public:
         /* Splits text into tokens by space characters(defines as in std::isspace) and pipes
          *  Deletes outer quotes and uses them as TypeOf quotation information in Tokens */
-        tokenizerResult tokenize(const std::string& text);
+        TokenizerResult tokenize(const std::string& text) const;
 
     private:
         class TokenizerHelper {

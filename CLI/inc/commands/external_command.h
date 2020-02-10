@@ -20,7 +20,8 @@ namespace NCLI::NCommand {
     /* Command that launches external command in separate process */
     class ExternalCommand : public Command {
     public:
-        ExternalCommand(const bf::path& path, std::vector<std::string> args) : path_(path), args_(args) {};
+        ExternalCommand(const bf::path& path, 
+                const std::vector<std::string>& args) : path_(path), args_(args) {};
         /* Executes external command specifies by path in separate process
          *  with {param}is as stdin and {param}os as stdout
          * Waits until end of its execution
@@ -34,10 +35,11 @@ namespace NCLI::NCommand {
          * Search command in $PATH by it's name
          * if non was found, returns error
          * otherwise returns pointer to command */
-        static Result<std::shared_ptr<Command>, std::string> create_command(std::vector<std::string> args);
+        static Result<std::shared_ptr<Command>, std::string> create_command(
+                const std::vector<std::string>& args);
     private:
-        bf::path path_;
-        std::vector<std::string> args_;
+        const bf::path path_;
+        const std::vector<std::string> args_;
     };
 
 } // namespace NCLI::NCommand

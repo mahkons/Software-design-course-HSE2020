@@ -37,7 +37,7 @@ namespace {
         CommandFactory command_factory;
         std::vector<std::string> args = {"simple", "a", "b"};
 
-        factoryResult result = command_factory.parse_command(args);
+        FactoryResult result = command_factory.parse_command(args);
         EXPECT_FALSE((bool)result);
         EXPECT_EQ("Unknown command: simple", result.get_error());
     }
@@ -48,7 +48,7 @@ namespace {
 
         command_factory.register_command(std::regex(".*imp.*"), SimpleCommand::create_command);
 
-        factoryResult result = command_factory.parse_command(args);
+        FactoryResult result = command_factory.parse_command(args);
         EXPECT_TRUE((bool)result);
         auto ptr = result.get_ok();
         SimpleCommand* command = dynamic_cast<SimpleCommand*>(ptr.get());
@@ -63,7 +63,7 @@ namespace {
         command_factory.register_command(std::regex(".*imp.*"), SimpleCommand::create_command);
         command_factory.register_command(std::regex(".*simple"), SimpleErrorCommand::create_command);
 
-        factoryResult result = command_factory.parse_command(args);
+        FactoryResult result = command_factory.parse_command(args);
         EXPECT_TRUE((bool)result);
         auto ptr = result.get_ok();
         SimpleCommand* command = dynamic_cast<SimpleCommand*>(ptr.get());
@@ -78,7 +78,7 @@ namespace {
         command_factory.register_command(std::regex("impossible"), SimpleErrorCommand::create_command);
         command_factory.register_command(std::regex(".*simple"), SimpleCommand::create_command);
 
-        factoryResult result = command_factory.parse_command(args);
+        FactoryResult result = command_factory.parse_command(args);
         EXPECT_TRUE((bool)result);
         auto ptr = result.get_ok();
         SimpleCommand* command = dynamic_cast<SimpleCommand*>(ptr.get());
@@ -93,7 +93,7 @@ namespace {
         command_factory.register_command(std::regex("impossible"), SimpleErrorCommand::create_command);
         command_factory.register_default_command(SimpleCommand::create_command);
 
-        factoryResult result = command_factory.parse_command(args);
+        FactoryResult result = command_factory.parse_command(args);
         EXPECT_TRUE((bool)result);
         auto ptr = result.get_ok();
         SimpleCommand* command = dynamic_cast<SimpleCommand*>(ptr.get());
@@ -107,7 +107,7 @@ namespace {
 
         command_factory.register_command(std::regex(".*imp.*"), SimpleErrorCommand::create_command);
 
-        factoryResult result = command_factory.parse_command(args);
+        FactoryResult result = command_factory.parse_command(args);
         EXPECT_FALSE((bool)result);
         EXPECT_EQ("construction error", result.get_error());
     }

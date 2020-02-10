@@ -19,7 +19,7 @@ namespace NCLI::NParser {
         }
     }
 
-    Token VariablesSubstitutor::substitute(const Token& token) {
+    Token VariablesSubstitutor::substitute(const Token& token) const {
         if (token.surrounding_quotes == TypeOfQuotation::strong) {
             return token;
         }
@@ -32,7 +32,7 @@ namespace NCLI::NParser {
         return Token(substituted_text, token.surrounding_quotes);
     }
 
-    std::vector<Token> VariablesSubstitutor::substitute(const std::vector<Token>& tokens) {
+    std::vector<Token> VariablesSubstitutor::substitute(const std::vector<Token>& tokens) const {
         std::vector<Token> tokens_after_substitution;
         for (const Token& token : tokens) {
             tokens_after_substitution.push_back(substitute(token));

@@ -33,13 +33,14 @@ namespace NCLI {
     }
 
     Application::Application() :
-        env_(), command_factory_(create_command_factory(env_)), parser_(env_, command_factory_) { }
+        env_(), command_factory_(create_command_factory(env_)),
+        parser_(env_, command_factory_), executor_() { }
 
     void Application::run() {
         std::string user_command;
         std::cout << "-> ";
         while (getline(std::cin, user_command)) {
-            NParser::parserResult parse_result = parser_.parse(user_command);
+            NParser::ParserResult parse_result = parser_.parse(user_command);
             if (!parse_result) {
                 std::cout << parse_result.get_error() << std::endl;
                 std::cout << "-> ";

@@ -21,8 +21,8 @@ namespace NCLI::NParser {
             return value == o.value && surrounding_quotes == o.surrounding_quotes;
         };
 
-        std::string value;
-        TypeOfQuotation surrounding_quotes;
+        const std::string value;
+        const TypeOfQuotation surrounding_quotes;
         
     };
 

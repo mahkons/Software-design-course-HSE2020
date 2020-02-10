@@ -6,7 +6,7 @@
 
 namespace NCLI::NParser {
 
-    tokenizerResult Tokenizer::tokenize(const std::string& text) {
+    TokenizerResult Tokenizer::tokenize(const std::string& text) const {
         TokenizerHelper helper;
         for (char c : text) {
             helper.add_char(c);
@@ -16,10 +16,10 @@ namespace NCLI::NParser {
         if (helper.current_quote() != TypeOfQuotation::none) {
             std::string error_message = "unmatched quote: ";
             error_message += static_cast<char>(helper.current_quote());
-            return tokenizerResult(Error(error_message));
+            return TokenizerResult(Error(error_message));
         }
 
-        return tokenizerResult(Ok(helper.get_tokens()));
+        return TokenizerResult(Ok(helper.get_tokens()));
     }
 
     void Tokenizer::TokenizerHelper::add_cur_word() {

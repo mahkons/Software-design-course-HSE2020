@@ -19,7 +19,7 @@ namespace NCLI::NCommand {
     } // namespace
 
     Result<std::shared_ptr<Command>, std::string> ExternalCommand::create_command(
-            std::vector<std::string> args) {
+            const std::vector<std::string>& args) {
 
         bf::path path = bp::search_path(args[0]);
 
@@ -27,9 +27,9 @@ namespace NCLI::NCommand {
             return Result<std::shared_ptr<Command>, std::string>(
                     Error("Unknown command: " + args[0]));
         }
-        args = std::vector<std::string>(args.begin() + 1, args.end());
         return Result<std::shared_ptr<Command>, std::string>(
-                Ok(std::shared_ptr<Command>(new ExternalCommand(path, args))));
+                Ok(std::shared_ptr<Command>(new ExternalCommand(path,
+                            std::vector<std::string>(args.begin() + 1, args.end())))));
     }
 
     ExecutionResult ExternalCommand::execute(std::istream& is, std::ostream& os) {

@@ -21,7 +21,8 @@ namespace NCLI::NCommand {
 
         /* Creates new PwdCommand and returns pointer to it
          * Always terminated successfully */
-        static Result<std::shared_ptr<Command>, std::string> create_command(std::vector<std::string> args);
+        static Result<std::shared_ptr<Command>, std::string> create_command(
+                const std::vector<std::string>& args);
     };
 
 } // namespace NCLI::NCommand

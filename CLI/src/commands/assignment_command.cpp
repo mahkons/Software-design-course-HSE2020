@@ -3,7 +3,7 @@
 namespace NCLI::NCommand {
 
     Result<std::shared_ptr<Command>, std::string> AssignmentCommand::create_command(
-            Environment& env, std::vector<std::string> args) {
+            Environment& env, const std::vector<std::string>& args) {
 
         size_t assignment_pos = args[0].find_first_of("=");
         if (args[0].find_first_of("=", assignment_pos + 1) != std::string::npos) {

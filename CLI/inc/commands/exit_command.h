@@ -19,7 +19,8 @@ namespace NCLI::NCommand {
         virtual ExecutionResult execute(std::istream& is, std::ostream& os) override;
 
         /* Creates pointer to new exit command. Ignores given arguments */
-        static Result<std::shared_ptr<Command>, std::string> create_command(std::vector<std::string> args);
+        static Result<std::shared_ptr<Command>, std::string> create_command(
+                const std::vector<std::string>& args);
     };
 
 } // namespace NCLI::NCommand

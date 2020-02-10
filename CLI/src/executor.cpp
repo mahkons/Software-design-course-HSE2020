@@ -5,8 +5,7 @@
 
 namespace NCLI {
 
-    NCommand::ExecutionResult Executor::execute(const std::vector<std::shared_ptr<NCommand::Command>>& commands,
-            std::istream& is, std::ostream& os) {
+    NCommand::ExecutionResult Executor::execute(const std::vector<std::shared_ptr<NCommand::Command>>& commands, std::istream& is, std::ostream& os) const {
 
         std::stringstream buf_in, buf_out;
         for (size_t i = 0; i < commands.size(); i++) {

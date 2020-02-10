@@ -3,7 +3,7 @@
 namespace NCLI::NCommand {
 
     Result<std::shared_ptr<Command>, std::string> EchoCommand::create_command(
-            std::vector<std::string> args) {
+            const std::vector<std::string>& args) {
 
         std::string acc = "";
         for (size_t i = 1; i < args.size(); i++) {
