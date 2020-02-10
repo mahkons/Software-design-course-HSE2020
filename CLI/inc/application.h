@@ -7,17 +7,23 @@
 
 namespace NCLI {
 
-    /* Command line interface
-     * Gets input from stdin and writes output to stdout */
+    /**
+     * Command line interface
+     * Gets input from stdin and writes output to stdout
+     */ 
     class Application {
     public:
-        /* Initialises application */
+        /**
+         * Initialises application
+         */ 
         Application();
         ~Application() = default;
         Application(const Application&) = delete;
         Application& operator=(const Application&) = delete;
 
-        /* Runs command line interface */
+        /**
+         * Runs command line interface
+         */ 
         void run();
 
     private:

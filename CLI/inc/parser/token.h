@@ -10,8 +10,10 @@ namespace NCLI::NParser {
         weak = '\"'
     };
 
-    /* Saves words with additional information
-     * TypeOfQuotation specifies type of quotes in whose text was wrapped */
+    /**
+     * Saves words with additional information
+     * TypeOfQuotation specifies type of quotes in whose text was wrapped
+     */ 
     class Token {
     public:
         Token(const std::string& value, const TypeOfQuotation& surrounding_quotes)
