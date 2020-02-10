@@ -37,12 +37,12 @@ namespace NCLI {
 
     void Application::run() {
         std::string user_command;
-        std::cout << "->";
+        std::cout << "-> ";
         while (getline(std::cin, user_command)) {
             NParser::parserResult parse_result = parser_.parse(user_command);
             if (!parse_result) {
                 std::cout << parse_result.get_error() << std::endl;
-                std::cout << "->";
+                std::cout << "-> ";
                 continue;
             }
             NCommand::ExecutionResult execution_result =
@@ -53,7 +53,7 @@ namespace NCLI {
             if (execution_result.status == NCommand::ExecutionStatus::exit) {
                 break;
             }
-            std::cout << "->";
+            std::cout << "-> ";
         }
     }
 

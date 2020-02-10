@@ -57,9 +57,9 @@ namespace NCLI::NCommand {
 
         if (exit_code == 0) {
             os << output.get();
-            return ExecutionResult(ExecutionStatus::success, "");
-        } else {
             return ExecutionResult(ExecutionStatus::success, error.get());
+        } else {
+            return ExecutionResult(ExecutionStatus::error, error.get());
         }
     }
 
