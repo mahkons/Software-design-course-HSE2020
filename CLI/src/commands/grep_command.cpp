@@ -9,40 +9,27 @@ namespace NCLI::NCommand {
     namespace po = boost::program_options;
 
     namespace {
-    }
 
-    Result<std::shared_ptr<Command>, std::string> GrepCommand::create_command(
-             const std::vector<std::string>& args) {
+        po::options_description declare_supported_options() {
+            po::options_description desc("Allowed options");
+            desc.add_options()
+                ("i,i", "case insensitivity")
+                ("w,w", "force pattern to match only whole words")
+                ("A,A", po::value<int>()->default_value(0), "print NUM lines of trailing context")
+                ("pattern", po::value<std::string>(), "pattern")
+                ("input-file", po::value<std::vector<std::string>>(), "input file");
+            ;
+            return desc;
+        }
 
-        // Declare the supported options.
-        po::options_description desc("Allowed options");
-        desc.add_options()
-            ("i,i", "case insensitivity")
-            ("w,w", "force pattern to match only whole words")
-            ("A,A", po::value<int>()->default_value(0), "print NUM lines of trailing context")
-            ("pattern", po::value<std::string>(), "pattern")
-            ("input-file", po::value<std::vector<std::string>>(), "input file");
-        ;
+        po::positional_options_description declare_positional_options() {
+            po::positional_options_description pd;
+            pd.add("pattern", 1);
+            pd.add("input-file", -1);
+            return pd;
+        }
 
-        po::positional_options_description pd;
-        pd.add("pattern", 1);
-        pd.add("input-file", -1);
-
-        try {
-            auto parsed = po::command_line_parser(std::vector<std::string>(args.begin() + 1, args.end()))
-                .options(desc)
-                .positional(pd)
-                .run();
-
-            po::variables_map vm;
-            po::store(parsed, vm);
-            po::notify(vm);
-
-            if (!vm.count("pattern")) {
-                return Result<std::shared_ptr<Command>, std::string>(
-                        Error(std::string("Pattern is not specified")));
-            }
-
+        std::regex define_pattern(const po::variables_map& vm) {
             std::string pattern_str = vm["pattern"].as<std::string>();
             // Add whole words matching
             if (vm.count("w")) {
@@ -56,6 +43,30 @@ namespace NCLI::NCommand {
             } else {
                 pattern = std::regex(pattern_str);
             }
+            return pattern;
+        }
+    } // namespace
+
+    Result<std::shared_ptr<Command>, std::string> GrepCommand::create_command(
+             const std::vector<std::string>& args) {
+
+        try {
+            po::options_description desc = declare_supported_options();
+            auto parsed = po::command_line_parser(std::vector<std::string>(args.begin() + 1, args.end()))
+                .options(desc)
+                .positional(declare_positional_options())
+                .run();
+
+            po::variables_map vm;
+            po::store(parsed, vm);
+            po::notify(vm);
+
+            if (!vm.count("pattern")) {
+                return Result<std::shared_ptr<Command>, std::string>(
+                        Error(std::string("Pattern is not specified")));
+            }
+            std::regex pattern = define_pattern(vm);
+
 
             if (vm.count("input-file")) {
                 std::vector<std::string> some = vm["input-file"].as<std::vector<std::string>>();
