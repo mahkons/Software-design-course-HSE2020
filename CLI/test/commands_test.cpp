@@ -12,6 +12,7 @@
 #include "commands/external_command.h"
 #include "commands/pwd_command.h"
 #include "commands/wc_command.h"
+#include "commands/grep_command.h"
 
 namespace {
     using namespace NCLI;
@@ -126,5 +127,94 @@ namespace {
                 result.message);
     }
 
+    TEST(Commands, GrepCommandStream) {
+        std::stringstream input("Input\nSome"), output;
+        auto ptr = GrepCommand::create_command({"grep", "put"}).get_ok();
+        GrepCommand command = *dynamic_cast<GrepCommand*>(ptr.get());
+
+        auto result = command.execute(input, output);
+        EXPECT_EQ("Input\n", output.str());
+        EXPECT_EQ(ExecutionStatus::success, result.status);
+        EXPECT_EQ("", result.message);
+    }
+
+    TEST(Commands, GrepCommandFile) {
+        std::stringstream input("Input"), output;
+        auto ptr = GrepCommand::create_command({"grep", "text", "../test/resources/test.txt"}).get_ok();
+        GrepCommand command = *dynamic_cast<GrepCommand*>(ptr.get());
+
+        auto result = command.execute(input, output);
+        EXPECT_EQ("Example text!\n", output.str());
+        EXPECT_EQ(ExecutionStatus::success, result.status);
+        EXPECT_EQ("", result.message);
+    }
+
+    TEST(Commands, GrepCommandUnknownFile) {
+        std::stringstream input("Input"), output;
+        auto ptr = GrepCommand::create_command({"grep", "text", "../test/resources/unknown.txt"}).get_ok();
+        GrepCommand command = *dynamic_cast<GrepCommand*>(ptr.get());
+
+        auto result = command.execute(input, output);
+        EXPECT_EQ("", output.str());
+        EXPECT_EQ(ExecutionStatus::error, result.status);
+        EXPECT_EQ("Can't open file: " +
+                std::string(std::filesystem::absolute("../test/resources/unknown.txt")) + "\n",
+                result.message);
+    }
+
+
+    TEST(Commands, GrepCommandMultipleFiles) {
+        std::stringstream input("Input"), output;
+        auto message = GrepCommand::create_command(
+                {"grep", "text", "../test/resources/unknown.txt", "../test/resources/test.txt"}).get_error();
+        EXPECT_EQ("Multiple files are not supported", message);
+    }
+
+    TEST(Commands, GrepCommandNoPattern) {
+        std::stringstream input("Input"), output;
+        auto message = GrepCommand::create_command(
+                {"grep", "-i"}).get_error();
+        EXPECT_EQ("Pattern is not specified", message);
+    }
+
+    TEST(Commands, GrepCommandUnknownFlag) {
+        std::stringstream input("Input"), output;
+        auto message = GrepCommand::create_command(
+                {"grep", "-B"}).get_error();
+        EXPECT_EQ("unrecognised option '-B'", message);
+    }
+
+    TEST(Commands, GrepCommandStreamIgnoreCase) {
+        std::stringstream input("some\nnice\n\nTEXt\n\nis pretty  is\n\nnice\nbye"), output;
+        auto ptr = GrepCommand::create_command({"grep", "-i", "text"}).get_ok();
+        GrepCommand command = *dynamic_cast<GrepCommand*>(ptr.get());
+
+        auto result = command.execute(input, output);
+        EXPECT_EQ("TEXt\n", output.str());
+        EXPECT_EQ(ExecutionStatus::success, result.status);
+        EXPECT_EQ("", result.message);
+    }
+
+    TEST(Commands, GrepCommandStreamWholeWords) {
+        std::stringstream input("some\nnice\n\nTEXt\n\nis pretty  is\n\nnice\nbye"), output;
+        auto ptr = GrepCommand::create_command({"grep", "-w", "pretty|bye|TEX"}).get_ok();
+        GrepCommand command = *dynamic_cast<GrepCommand*>(ptr.get());
+
+        auto result = command.execute(input, output);
+        EXPECT_EQ("is pretty  is\nbye\n", output.str());
+        EXPECT_EQ(ExecutionStatus::success, result.status);
+        EXPECT_EQ("", result.message);
+    }
+
+    TEST(Commands, GrepCommandStreamTrailingContext) {
+        std::stringstream input("some\nnice\n\nTEXt\n\nis pretty  is\n\nnice\nbye"), output;
+        auto ptr = GrepCommand::create_command({"grep", "-A", "3", "nice"}).get_ok();
+        GrepCommand command = *dynamic_cast<GrepCommand*>(ptr.get());
+
+        auto result = command.execute(input, output);
+        EXPECT_EQ("nice\n\nTEXt\n\nnice\nbye\n", output.str());
+        EXPECT_EQ(ExecutionStatus::success, result.status);
+        EXPECT_EQ("", result.message);
+    }
 
 } // namespace
