@@ -21,6 +21,7 @@ set(SOURCES
     src/commands/cat_command.cpp
     src/commands/assignment_command.cpp
     src/commands/external_command.cpp
+    src/commands/grep_command.cpp
 )
 
 include_directories(inc/)
@@ -28,7 +29,7 @@ include_directories(inc/)
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)
 include_directories(${Boost_INCLUDE_DIRS})
-find_package(Boost COMPONENTS filesystem REQUIRED)
+find_package(Boost COMPONENTS filesystem program_options REQUIRED)
 
 add_library(lcli STATIC ${SOURCES})
 target_link_libraries(lcli stdc++fs)

@@ -13,6 +13,7 @@
 #include "commands/cat_command.h"
 #include "commands/assignment_command.h"
 #include "commands/external_command.h"
+#include "commands/grep_command.h"
 
 namespace NCLI {
 
@@ -26,6 +27,7 @@ namespace NCLI {
             factory.register_command(std::regex("exit"), NCommand::ExitCommand::create_command);
             factory.register_command(std::regex(".*=.*"),
                     std::bind(NCommand::AssignmentCommand::create_command, env, std::placeholders::_1));
+            factory.register_command(std::regex("grep"), NCommand::GrepCommand::create_command);
 
             factory.register_default_command(NCommand::ExternalCommand::create_command);
             return factory;
